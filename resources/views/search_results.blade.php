@@ -6,41 +6,39 @@
     <title>Infracom Technology</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <style>
+        /* General Styles */
         body {
             background-color: #BFBD90;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
         }
-
         .logo {
             position: absolute;
             top: 10px;
             left: 10%;
         }
-
         .logo img {
             width: 25%;
         }
-
         .divider {
             width: 450%;
             height: 2px;
             background-color: #b8b58a;
             margin-top: 10px;
         }
-
         .title {
             font-size: 36px;
             font-weight: bold;
             margin-bottom: 20px;
         }
 
+        /* Search Bar */
         .search-bar {
             display: flex;
             align-items: center;
@@ -50,17 +48,16 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             max-width: 800px;
             width: 100%;
+            margin-bottom: 20px;
         }
-
         .search-bar input {
             border: none;
             outline: none;
             font-size: 16px;
             flex: 1;
         }
-
         .search-bar button {
-            background-color: #cdc9a1; /* Button color */
+            background-color: #cdc9a1;
             border: none;
             padding: 0;
             cursor: pointer;
@@ -72,15 +69,14 @@
             height: 36px;
             border-radius: 8px;
         }
-
         .search-bar button i {
-            font-size: 16px; /* Adjust icon size */
-            font-weight: 700;
-            color: black; /* Icon color */
+            font-size: 16px;
+            color: black;
         }
 
+        /* Upload Button */
         .upload-button {
-            background-color: #8b8c68; /* Button color */
+            background-color: #8b8c68;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -91,8 +87,52 @@
             text-decoration: none;
             text-align: center;
         }
-
         .upload-button:hover {
+            background-color: #7a7b61;
+        }
+
+        /* Search Results */
+        .search-results {
+            background-color: #fff;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .search-results h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .search-results .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .result-item {
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .result-item strong {
+            font-size: 16px;
+        }
+        .result-item .download-link {
+            display: inline-block;
+            margin-top: 10px;
+            background-color: #8b8c68;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .result-item .download-link:hover {
             background-color: #7a7b61;
         }
     </style>
@@ -115,7 +155,35 @@
         </form>
     </div>
 
-    <!-- Upload Data Button -->
     <a href="{{ url('/upload-form') }}" class="upload-button">Upload Document</a>
+
+    <!-- Search Results Section -->
+    <div class="search-results">
+        <h1>Search Results</h1>
+
+        @if(session('error'))
+            <p class="error-message">{{ session('error') }}</p>
+        @endif
+
+        <p><strong>Response:</strong> {{ $response }}</p>
+
+        <ul>
+            @foreach($documents as $doc)
+                <li class="result-item">
+                    <strong>Document:</strong> {{ $doc['name'] }} <br>
+                    <strong>Overall Score:</strong> {{ $doc['overall_score'] }} <br>
+                    <strong>Content Score:</strong> {{ $doc['content_score'] }} <br>
+                    <strong>Category Score:</strong> {{ $doc['category_score'] }} <br>
+
+                    <!-- Download or Access Link -->
+                    <a href="{{ url('storage/' . $doc['path']) }}" target="_blank" class="download-link">Download / Access Document</a>
+                </li>
+            @endforeach
+        </ul>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{{ url('/') }}">Back to Search</a>
+        </div>
+    </div>
 </body>
 </html>

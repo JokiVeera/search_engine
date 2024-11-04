@@ -9,5 +9,11 @@ class File extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'file_path'];
+    protected $fillable = [
+        'title',
+        'file_path',
+        'content',
+        'encoded_content',
+        'category',
+    ];
 }

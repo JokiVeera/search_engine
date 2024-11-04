@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('file_path');
-            $table->text('content')->nullable();            // For Content
-            $table->binary('encoded_content')->nullable();  // For BERT Encoded Content
-            $table->string('category')->nullable();         // For Category
+            $table->longtext('content');            // For Content
+            $table->binary('encoded_content');  // For BERT Encoded Content
+            $table->string('category');         // For Category
             $table->timestamps();
         });
     }

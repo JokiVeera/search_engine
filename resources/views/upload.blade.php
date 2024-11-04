@@ -5,6 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Upload</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .custom-alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4CAF50; /* Green background */
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            z-index: 1000;
+            animation: slide-in 0.5s ease-out;
+        }
+
+        .custom-alert .close-button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+
+        .custom-alert .close-button:hover {
+            color: #ffdddd;
+        }
+
+        @keyframes slide-in {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    </style>
     <script>
         function updateTitleInput() {
             const fileInput = document.getElementById('dropzone-file');
@@ -37,9 +77,19 @@
                 uploadStatus.classList.add('hidden'); // Hide the status if all is good
             }
         }
+
+        function dismissAlert() {
+            document.getElementById('notificationAlert').style.display = 'none';
+        }
     </script>
 </head>
 <body style="background-color: #BFBD90;" class="flex items-center justify-center min-h-screen">
+    @if (session('message'))
+        <div class="custom-alert" id="notificationAlert">
+            {{ session('message') }}
+            <button type="button" class="close-button" onclick="dismissAlert()">×</button>
+        </div>
+    @endif
     <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
         <h1 class="text-xl font-bold mb-4 text-center">Upload File</h1>
         <form action="{{ url('/upload') }}" method="POST" enctype="multipart/form-data" onsubmit="handleSubmit(event)">
