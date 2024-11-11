@@ -19,13 +19,38 @@
         }
 
         .logo {
-            position: absolute;
+            position: fixed;
             top: 10px;
             left: 10%;
+            max-width: 100%; /* Ensure the image doesn’t exceed the container */
+            height: auto;
         }
 
         .logo img {
             width: 25%;
+            max-width: 25%; /* Ensure the image doesn’t exceed the container */
+            height: auto;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                width: 25%; /* Adjust size for tablets or smaller screens */
+                height: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                width: 25; /* Adjust size for mobile devices */
+                height: auto;
+            }
+        }
+
+        @media (max-height: 300px) {
+            .logo {
+                display: none; /* Hide the logo on tablets and smaller screens */
+            }
         }
 
         .divider {
@@ -42,7 +67,7 @@
         }
 
         .search-bar {
-            display: flex;
+            display: inline-block;
             align-items: center;
             background-color: white;
             padding: 10px 20px;
@@ -57,6 +82,10 @@
             outline: none;
             font-size: 16px;
             flex: 1;
+            min-width: 0;
+            white-space: nowrap;
+            max-width: 800px;
+            width: 100%;
         }
 
         .search-bar button {
@@ -100,7 +129,7 @@
 <body>
     <div class="logo">
         <img src="{{ asset('images/logo.png') }}" alt="ICT Logo">
-        <div class="divider"></div>
+        {{-- <div class="divider"></div> --}}
     </div>
 
     <div class="title">Infracom Technology</div>
@@ -108,7 +137,7 @@
     <div class="search-bar">
         <form action="{{ route('search_pdf') }}" method="POST">
             @csrf
-            <input type="text" name="query" placeholder="Input a keyword" required>
+            <input type="text" name="query" placeholder="Input a keyword" required width="100%">
             <button type="submit">
                 <i class="bi bi-search"></i>
             </button>
