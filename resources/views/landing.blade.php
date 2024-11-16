@@ -124,9 +124,41 @@
         .upload-button:hover {
             background-color: #7a7b61;
         }
+
+        .auth-button {
+        position: fixed;
+        top: 10px;
+        right: 10%;
+        background-color: #8b8c68; /* Button color */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        display: inline-block;
+        }
+
+        .auth-button:hover {
+            background-color: #7a7b61;
+        }
+
     </style>
 </head>
 <body>
+    <!-- Logout/Login Button -->
+    @if (auth()->guard('admin')->check())
+        <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+            @csrf
+            <button type="submit" class="auth-button">Logout</button>
+        </form>
+    @else
+        <a href="{{ route('login') }}" class="auth-button">Log In</a>
+    @endif
+
     <div class="logo">
         <img src="{{ asset('images/logo.png') }}" alt="ICT Logo">
         {{-- <div class="divider"></div> --}}

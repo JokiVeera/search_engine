@@ -9,6 +9,11 @@ use App\Models\File;
 
 class FileController extends Controller
 {
+    public function index()
+    {
+        return view('upload');
+    }
+
     public function store(Request $request)
     {
         // Validate the request
