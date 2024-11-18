@@ -177,6 +177,9 @@
     </div>
 
     <!-- Upload Data Button -->
-    <a href="{{ url('/upload-form') }}" class="upload-button">Upload Document</a>
+    @if (auth()->guard('admin')->check())  <!-- Check if the admin user is logged in -->
+        <a href="{{ url('/upload-form') }}" class="upload-button">Upload Document</a>
+    @endif
+
 </body>
 </html>
